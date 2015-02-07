@@ -1,39 +1,20 @@
 var socket = io('localhost:3000');
-var accessToken;
 
-socket.on('token', function (data) {
-	accessToken = data.token.access_token;
-	var x = getData(accessToken);
-	console.log(x);
+socket.on('news', function (data) {
+	console.log(data);	
+	socket.emit('other', 'other');
 });
 
-// function getData() {
-// 	var xmlHttp = null;
+// On submit
+$('#beerSubmit').on('click', function () {
+	var enteredBeer = document.getElementById('beerInput').value;
+	console.log(enteredBeer);
+});
 
-// 	xmlHttp = new XMLHttpRequest();
-//   xmlHttp.open( "GET", 'https://api.foodily.com/v1/beerLookup?name=budweiser&zone=EUR&limit=50', false );
-//   xmlHttp.setRequestHeader( 'Authorization', 'Bearer ' + accessToken );
-//   xmlHttp.send( null );
 
-//   xmlhttp.onreadystatechange=function() {
-//   if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-//     // do stuff here
-//   return xmlHttp.responseText;
-//   }
-// }
-// }
 
-function getData(accessToken) {
-	// $.ajaxSetup({
-	// 	headers: { 'Authorization' : 'Bearer ' + accessToken }
-	// });
-	$.ajax({
-		headers: { 'Authorization' : 'Bearer ' + accessToken },
-	  type: 'GET',
-	  url: 'https://api.foodily.com/v1/beerLookup?name=budweiser&zone=EUR&limit=50',
-	  dataType: 'json',
-	  success: function(data) {
-	    console.log(data);
-	  }
-	});
-}
+// socket.on('token', function (data) {
+// 	accessToken = data.token.access_token;
+// 	var x = getData(accessToken);
+// 	console.log(x);
+// });

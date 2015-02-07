@@ -8,7 +8,6 @@ var
   io           = require('socket.io')(server),
   cors         = require('cors'),
 
-
   favicon      = require('serve-favicon'),
   logger       = require('morgan'),
   cookieParser = require('cookie-parser'),
@@ -37,16 +36,20 @@ oauth2.client.getToken({}, saveToken);
 // OAuth Token
 var token;
 
-// SOCKET.IO CONNECTION
+// On initial connection
 io.on('connection', function (socket) {
-  io.emit('token', token);
+  socket.emit('news', 'hello from node');
+  socket.on('other', function (data) {
+    console.log('hi from client');
+  });
 });
+
+
 
 // Save the access token
 function saveToken(error, result) {
   if (error) { console.log('Access Token Error', error.message); }
   token = oauth2.accessToken.create(result);
-  io.emit('token', token);
   hitApi(token.token.access_token);
   // console.log(token.token.access_token);
 };
@@ -54,13 +57,13 @@ function saveToken(error, result) {
 function hitApi(token) {
   var options = {
     host: 'api.foodily.com',
-    path: '/v1/beerLookup?name=budweiser&zone=EUR&limit=50',
+    path: '/v1/beerLookup?&zone=EUR',
     headers: { 'Authorization' : 'Bearer ' + token }
   };
 
   http.get(options, function(resp){
     resp.on('data', function(chunk){
-      console.log("RETURN:" + chunk);
+      var obj = JSON.parse(chunk);
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 

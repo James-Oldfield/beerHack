@@ -7,7 +7,13 @@
   <body>
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
+
+    <input id="beerInput" type="text"></input>
+    <br><br>
+    <input id="beerSubmit" type="submit">
+
     <div id="test"></div>
+
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.2.js"></script>
     <script src="javascripts/main.js"></script>
