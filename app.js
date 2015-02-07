@@ -31,7 +31,7 @@ var oauth2 = require('simple-oauth2')({
 });
 
 // OAuth Token
-var token, keyword, obj, returnData;
+var token, keyword, obj, returnBeerData, returnMovieData;
 
 // On initial connection
 io.on('connection', function (socket) {
@@ -42,7 +42,7 @@ io.on('connection', function (socket) {
     console.log(data);
   });
 
-  // ON CLIENT
+  // ON CLIENT beer
   socket.on('whatBeer', function (data) {
     console.log(data);
 
@@ -52,8 +52,18 @@ io.on('connection', function (socket) {
     // Get the access token object for the client
     oauth2.client.getToken({}, saveToken);
 
-    returnData = function(obj) {
+    returnBeerData = function(obj) {
       socket.emit('thisBeer', obj);
+    }
+  });
+
+ // ON CLIENT movie
+  socket.on('whatMovie', function (data) {
+    hitMovieApi(data);
+
+    returnMovieData = function (obj) {
+      socket.emit('thisMovie', obj);
+      console.log('returned');
     }
   });
 });
@@ -65,7 +75,7 @@ function saveToken(error, result) {
   hitApi(token.token.access_token, keyword);
 };
 
-// Hit the API
+// Hit the beer API
 function hitApi(token, keyword) {
   var options = {
     host: 'api.foodily.com',
@@ -78,7 +88,29 @@ function hitApi(token, keyword) {
       obj = JSON.parse(chunk);
       console.log(obj);
       // return the object
-      returnData(obj);
+      returnBeerData(obj);
+    });
+  }).on('error', function(e){
+    console.log("Error: " + e.message); 
+    console.log( e.stack );
+  });
+}
+
+// Hit the RT API
+function hitMovieApi(movieQuery) {
+  RTApiKey = '26c5cdc6064e67ecfea591598675b0ea';
+
+  var options = {
+    host: 'api.themoviedb.org',
+    path: '/3/search/movie?api_key=' + RTApiKey + '&query='+ movieQuery
+  };
+
+  http.get(options, function(resp) {
+    resp.on('data', function(chunk) {
+      var obj = JSON.parse(chunk);
+      var poster = obj.results[0].poster_path;
+
+      returnMovieData(poster);
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 
@@ -99,6 +131,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+app.set('testlol', 'testlol');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

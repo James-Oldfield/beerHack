@@ -7,10 +7,14 @@
   <body>
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
+    {{ movieTitle }}
 
-    <input id="beerInput" type="text"></input>
+    <input id="movieInput" type="text"></input>
     <br><br>
-    <input id="beerSubmit" type="submit">
+    <input id="movieSubmit" type="submit">
+
+    <div id="moviePosters">
+    </div>
 
     <div id="test"></div>
 
