@@ -20,12 +20,13 @@ $( document ).ready(function() {
     });
 
 });
+    
 $(".food_input").change(function(){
-    console.log($(".top").offset());
-    $(".top").css({"top": "-=550px"});
-    console.log($(".top").offset());
+    $(".top").css({"display": "none"});
+    $(".bot").css({"display": "none"});
 });
 });
+
    function blockMove() {
       event.preventDefault() ;
    }
