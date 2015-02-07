@@ -30,40 +30,55 @@ var oauth2 = require('simple-oauth2')({
   tokenPath: '/v1/token'
 });
 
-// Get the access token object for the client
-oauth2.client.getToken({}, saveToken);
-
 // OAuth Token
-var token;
+var token, keyword, obj, returnData;
 
 // On initial connection
 io.on('connection', function (socket) {
-  socket.emit('news', 'hello from node');
-  socket.on('other', function (data) {
-    console.log('hi from client');
+  socket.emit('helloClient', 'Hello client!');
+
+  // Send hello to client
+  socket.on('helloNode', function (data) {
+    console.log(data);
+  });
+
+  // ON CLIENT
+  socket.on('whatBeer', function (data) {
+    console.log(data);
+
+    // store the entered value in keyword var
+    keyword = data;
+
+    // Get the access token object for the client
+    oauth2.client.getToken({}, saveToken);
+
+    returnData = function(obj) {
+      socket.emit('thisBeer', obj);
+    }
   });
 });
-
-
 
 // Save the access token
 function saveToken(error, result) {
   if (error) { console.log('Access Token Error', error.message); }
   token = oauth2.accessToken.create(result);
-  hitApi(token.token.access_token);
-  // console.log(token.token.access_token);
+  hitApi(token.token.access_token, keyword);
 };
 
-function hitApi(token) {
+// Hit the API
+function hitApi(token, keyword) {
   var options = {
     host: 'api.foodily.com',
-    path: '/v1/beerLookup?&zone=EUR',
+    path: '/v1/beerLookup?name=' + keyword + '&zone=EUR',
     headers: { 'Authorization' : 'Bearer ' + token }
   };
 
-  http.get(options, function(resp){
-    resp.on('data', function(chunk){
-      var obj = JSON.parse(chunk);
+  http.get(options, function(resp) {
+    resp.on('data', function(chunk) {
+      obj = JSON.parse(chunk);
+      console.log(obj);
+      // return the object
+      returnData(obj);
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 
