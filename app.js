@@ -13,6 +13,11 @@ var
 
   routes       = require('./routes/index');
 
+  // Listen on port 3000
+  server.listen(process.env.PORT || 3000, function () {
+    console.log('listening on port 3000');
+  });
+
 var oauth2 = require('simple-oauth2')({
   clientID: 'ab-65',
   clientSecret: 'aOMnJ5z0RpfkNHRi',
@@ -26,30 +31,17 @@ oauth2.client.getToken({}, saveToken);
 // OAuth Token
 var token;
 
+// SOCKET.IO CONNECTION
+io.on('connection', function (socket) {
+  io.emit('token', token);
+});
+
 // Save the access token
 function saveToken(error, result) {
   if (error) { console.log('Access Token Error', error.message); }
   token = oauth2.accessToken.create(result);
-  console.log(token);
+  io.emit('token', token);
 };
-
-  // Listen on port 3000
-  server.listen(process.env.PORT || 3000);
-  console.log('listening on port 3000');
-
-// // SOCKET.IO CONNECTION
-// io.on('connection', function (socket) {
-//   t.stream('statuses/filter', {track: 'test'}, function(stream) {
-//     stream.on('data', function(tweet) {
-//       // emit the tweets object to the client
-//       io.emit('tweets', { test: tweet.text});
-//     });
-//     // error handler
-//     stream.on('error', function(error) {
-//       console.log(error);
-//     });
-//   });
-// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
