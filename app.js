@@ -8,6 +8,23 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var oauth2 = require('simple-oauth2')({
+  clientID: 'ab-65',
+  clientSecret: 'aOMnJ5z0RpfkNHRi',
+  site: 'https://api.foodily.com',
+  tokenPath: '/v1/token'
+});
+
+// Get the access token object for the client
+oauth2.client.getToken({}, saveToken);
+
+// Save the access token
+function saveToken(error, result) {
+  if (error) { console.log('Access Token Error', error.message); }
+  token = oauth2.accessToken.create(result);
+  console.log(token);
+};
+
 var app = express();
 
 // view engine setup
