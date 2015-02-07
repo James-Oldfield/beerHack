@@ -1,25 +1,60 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>{{ title }}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
-    {{ movieTitle }}
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+    <script src="https://cdn.socket.io/socket.io-1.3.2.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <script src="javascripts/functions.js"></script>
 
-    <input id="movieInput" type="text"></input>
-    <br><br>
-    <input id="movieSubmit" type="submit">
-
-    <div id="moviePosters">
-    </div>
+</head>
+<body ontouchmove="blockMove()">
 
     <div id="test"></div>
 
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.3.2.js"></script>
-    <script src="javascripts/main.js"></script>
-  </body>
+    <div class="container">
+        <div class="top" id="showdiv4"><img src="banner.png"></div>
+        
+        <div class="mid">
+        
+            <div class="food" id="showdiv1"><span class="txt"><i class="fa fa-birthday-cake"></i></span></div>
+            <div class="beer" id="showdiv2"><span class="txt"><i class="fa fa-beer"></i></span></div>
+            <div class="film" id="showdiv3"><span class="txt"><i class="fa fa-film"></i></span></div>
+        
+        </div>
+        
+        <div class="bot">
+            <div class="ui-field-contain" style="width:80%;margin:auto;border:0;" id="div1" style="display:none;"><br/>
+                <input type="text" name="name" class="searchInput" placeholder="FOOD" />
+            </div>
+            
+            <div class="ui-field-contain" style="width:80%;margin:auto;border:0;" id="div2" style="display:none;"><br/>
+                <input type="text" name="name" class="searchInput" placeholder="BEER"   />
+            </div>
+            
+            <div class="ui-field-contain" style="width:80%;margin:auto;border:0;" id="div3" style="display:none;"><br/>
+                <input type="text" name="name" id="movieInput" class="searchInput" placeholder="FILM"   />
+            </div>
+        </div>
+        
+        <div class="next_section">
+            <div class="selction">
+              <div id="movieTitles">
+              </div>
+              <div id="moviePosters">
+              </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
 </html>

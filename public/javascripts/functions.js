@@ -21,12 +21,12 @@ $( document ).ready(function() {
 
 });
     
-$(".food_input").change(function(){
+$("#movieInput").change(function(){
     $(".top").css({"display": "none"});
     $(".bot").css({"display": "none"});
-});
+    });
 });
 
-   function blockMove() {
-      event.preventDefault() ;
-   }
+function blockMove() {
+    event.preventDefault() ;
+}

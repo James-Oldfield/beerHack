@@ -1,11 +1,12 @@
 var socket = io('localhost:3000');
+var titles;
 
 // SOCKET CONNECTION
 socket.on('helloClient', function (data) {
-	console.log(data);	
 
 	// Send hello to Node
 	socket.emit('helloNode', 'Hello Node!');
+	console.log(data);	
 
 	// On submit emit to server
 	// $('#beerSubmit').on('click', function () {
@@ -14,17 +15,23 @@ socket.on('helloClient', function (data) {
 	// });
 
 	// On submit emit to server
-	$('#movieSubmit').on('click', function () {
-		var enteredMovie = document.getElementById('movieInput').value;
+	$("#movieInput").change(function () {
+		var enteredMovie = escape(document.getElementById('movieInput').value);
 		socket.emit('whatMovie', enteredMovie);
 	});
 
 	socket.on('thisMovie', function (data) {
-		var element = document.createElement('img');
-		element.src = 'http://image.tmdb.org/t/p/w500' + data;
 
-		var currentDiv = document.getElementById('moviePosters');
-		document.body.insertBefore(element, currentDiv);
+		titles = data;
+		drawTitles(titles);
+
+		console.log(titles);
+
+		// var element = document.createElement('img');
+		// element.src = 'http://image.tmdb.org/t/p/w500' + data;
+		// var currentDiv = document.getElementById('moviePosters');
+		// currentDiv.appendChild(element);
+
 	});
 
 	socket.on('thisBeer', function (data) {
@@ -40,3 +47,12 @@ socket.on('helloClient', function (data) {
 		}
 	});
 });
+
+function drawTitles(titles) {
+		for (var i=0; i<titles.length; i++) {
+			var element = document.createElement('div');
+			element.innerHTML = titles[i].title;
+			var currentDiv = document.getElementById('movieTitles');
+			currentDiv.appendChild(element);
+		}
+}

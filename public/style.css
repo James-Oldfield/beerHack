@@ -95,4 +95,10 @@ html, body {
     width: 100%;
     background: #ce3f31;
 }
+#moviePosters img {
+    display: block;
+    max-width: 80%;
+    height: auto;
+    margin: auto;
+}
 

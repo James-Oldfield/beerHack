@@ -108,9 +108,9 @@ function hitMovieApi(movieQuery) {
   http.get(options, function(resp) {
     resp.on('data', function(chunk) {
       var obj = JSON.parse(chunk);
-      var poster = obj.results[0].poster_path;
+      var movies = obj.results;
 
-      returnMovieData(poster);
+      returnMovieData(movies);
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 
