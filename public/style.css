@@ -1,5 +1,5 @@
 html, body {
-    height: 100vh;
+    height: 200vh;
     margin: 0px;
     padding: 0px;
     font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
@@ -88,6 +88,13 @@ html, body {
 
 .bot {
     height:40%;
+    background: #ce3f31;
+}
+.next_section {
+    height: 60vh;
+    width: 100%;
+    position: relative;
+    top: 30%;
     background: #ce3f31;
 }
 

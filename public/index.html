@@ -14,37 +14,9 @@
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     
-</head>
-
-<script type="text/javascript">
-    $( document ).ready(function() {
-        $(function() {
-        $('div[id^=div]').hide();
-    $('#showdiv1').click(function() {
-        $('div[id^=div]').hide();
-        $('#div1').show();
-    });
-    $('#showdiv2').click(function() {
-        $('div[id^=div]').hide();
-        $('#div2').show();
-    });
-
-    $('#showdiv3').click(function() {
-        $('div[id^=div]').hide();
-        $('#div3').show();
-    });
-
-    $('#showdiv4').click(function() {
-        $('div[id^=div]').hide();
-    });
-
-});
-});
-   function blockMove() {
-      event.preventDefault() ;
-   }
+    <script src="javascripts/functions.js"></script>
     
-</script>
+</head>
 
 <body ontouchmove="blockMove()">
     
@@ -69,11 +41,12 @@
             </div>
             
             <div class="ui-field-contain" style="width:80%;margin:auto;border:0;" id="div3" style="display:none;"><br/>
-                <input type="text" name="name" id="name" value="" class="food_input" placeholder="FILM" onchange="f"   />
+                <input type="text" name="name" id="name" value="" class="food_input" placeholder="FILM"   />
             </div>
         </div>
         
         <div class="next_section">
+            <p>Hello</p>
             <div class="selction">
             </div>
         </div>
