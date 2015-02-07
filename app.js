@@ -1,14 +1,10 @@
 var
   fs           = require('fs'),
-  https        = require('https'),
-  httpOptions  = { 
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem') 
-  },
+  http         = require('http'),
   express      = require('express'),
   app          = express(),
   path         = require('path'),
-  server       = https.createServer(httpOptions ,app),
+  server       = http.createServer(app),
   io           = require('socket.io')(server),
   cors         = require('cors'),
 
@@ -62,9 +58,9 @@ function hitApi(token) {
     headers: { 'Authorization' : 'Bearer ' + token }
   };
 
-  https.get(options, function(resp){
-    resp.on('data', function(data){
-      console.log("RETURN:" + data.inspect());
+  http.get(options, function(resp){
+    resp.on('data', function(chunk){
+      console.log("RETURN:" + chunk);
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 
