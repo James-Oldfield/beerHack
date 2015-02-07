@@ -3,7 +3,7 @@ var accessToken;
 
 socket.on('token', function (data) {
 	accessToken = data.token.access_token;
-	var x = getData();
+	var x = getData(accessToken);
 	console.log(x);
 });
 
@@ -23,7 +23,7 @@ socket.on('token', function (data) {
 // }
 // }
 
-function getData() {
+function getData(accessToken) {
 	// $.ajaxSetup({
 	// 	headers: { 'Authorization' : 'Bearer ' + accessToken }
 	// });
@@ -31,7 +31,7 @@ function getData() {
 		headers: { 'Authorization' : 'Bearer ' + accessToken },
 	  type: 'GET',
 	  url: 'https://api.foodily.com/v1/beerLookup?name=budweiser&zone=EUR&limit=50',
-	  dataType: 'jsonp',
+	  dataType: 'json',
 	  success: function(data) {
 	    console.log(data);
 	  }

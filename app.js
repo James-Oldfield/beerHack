@@ -1,10 +1,17 @@
 var
-  http         = require('http'),
+  fs           = require('fs'),
+  https        = require('https'),
+  httpOptions  = { 
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem') 
+  },
   express      = require('express'),
   app          = express(),
   path         = require('path'),
-  server       = http.createServer(app),
+  server       = https.createServer(httpOptions ,app),
   io           = require('socket.io')(server),
+  cors         = require('cors'),
+
 
   favicon      = require('serve-favicon'),
   logger       = require('morgan'),
@@ -12,6 +19,9 @@ var
   bodyParser   = require('body-parser'),
 
   routes       = require('./routes/index');
+
+  // use CORS
+  app.use(cors());
 
   // Listen on port 3000
   server.listen(process.env.PORT || 3000, function () {
@@ -41,7 +51,26 @@ function saveToken(error, result) {
   if (error) { console.log('Access Token Error', error.message); }
   token = oauth2.accessToken.create(result);
   io.emit('token', token);
+  hitApi(token.token.access_token);
+  // console.log(token.token.access_token);
 };
+
+function hitApi(token) {
+  var options = {
+    host: 'api.foodily.com',
+    path: '/v1/beerLookup?name=budweiser&zone=EUR&limit=50',
+    headers: { 'Authorization' : 'Bearer ' + token }
+  };
+
+  https.get(options, function(resp){
+    resp.on('data', function(data){
+      console.log("RETURN:" + data.inspect());
+    });
+  }).on('error', function(e){
+    console.log("Error: " + e.message); 
+    console.log( e.stack );
+  });
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
