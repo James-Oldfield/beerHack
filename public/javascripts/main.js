@@ -59,7 +59,7 @@ function openMoviePoster(title) {
 			map = 
 			(movieScore - 3) * 10 / 6;
 			if (map < 0) {
-				map = 0;
+				map = map - 10;
 			}
 			document.getElementById('moviePosterTitle').innerHTML = h1;
 			imageDiv.src = 'http://image.tmdb.org/t/p/w500' + movies[i].poster_path;
