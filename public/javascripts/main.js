@@ -9,12 +9,6 @@ socket.on('helloClient', function (data) {
 	console.log(data);	
 
 	// On submit emit to server
-	// $('#beerSubmit').on('click', function () {
-	// 	var enteredBeer = document.getElementById('beerInput').value;
-	// 	socket.emit('whatBeer', enteredBeer);
-	// });
-
-	// On submit emit to server
 	$("#movieInput").change(function () {
 		var enteredMovie = escape(document.getElementById('movieInput').value);
 		socket.emit('whatMovie', enteredMovie);
@@ -61,7 +55,10 @@ function openMoviePoster(title) {
 	var imageDiv = document.getElementById('moviePoster');
 	for (var i=0; i<movies.length; i++) {
 		if (movies[i].title == title) {
+			var h1 = movies[i].title;
+			document.getElementById('moviePosterTitle').innerHTML = h1;
 			imageDiv.src = 'http://image.tmdb.org/t/p/w500' + movies[i].poster_path;
 		}
 	}
+	$('#movieTitles').css('display', 'none');
 }

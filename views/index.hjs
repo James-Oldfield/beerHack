@@ -50,6 +50,7 @@
               <div id="movieTitles">
               </div>
               <div id="moviePosters">
+                <h1 id="moviePosterTitle" style="margin-top:0px"></h1>
                 <img id="moviePoster" src="" alt=""></img>
               </div>
             </div>
