@@ -1,4 +1,4 @@
-var socket = io('localhost:3000');
+var socket = io(window.location.hostname);
 var movies, movieScore, beers, map, food;
 
 // SOCKET CONNECTION
