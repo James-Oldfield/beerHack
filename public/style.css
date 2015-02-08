@@ -5,6 +5,10 @@ html, body {
     font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif;
     background: #ce3f31;
 }
+* {
+    text-shadow: 0;
+    
+}
 ::-webkit-input-placeholder {
    text-align: center;
 }
@@ -101,6 +105,8 @@ html, body {
     max-width: 80%;
     height: auto;
     margin: auto;
+    padding-top: 20px;
+    border: 4px solid #fff;
 }
 #movieTitles {
     text-align: center;
@@ -127,6 +133,9 @@ html, body {
 #movieTitles h1:active {
     background: #ce3f31;
 }
+#moviePosterTitle div {
+    color: red;
+}
 #moviePosterTitle {
     text-align: center;
     color: #fff;
@@ -136,3 +145,15 @@ html, body {
     background: #a7362b;
 }
 
+#moviePosterTitle h1:after {
+    content:'';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -50px;
+    width: 0;
+    height: 0;
+    border-top: solid 50px #e15915;
+    border-left: solid 50px transparent;
+    border-right: solid 50px transparent;
+}
