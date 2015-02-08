@@ -72,7 +72,8 @@ function openMoviePoster(title) {
 
 		// Initial comparison
 		for (var i=0; i<beers.length; i++) {
-			if (map-0.2 <= beers[i].abv && map+0.2 >= beers[i].abv) {
+			if ((map-0.2 <= beers[i].abv && map+0.2 >= beers[i].abv)
+				&& (!beers[i].flavorProfile == "")) {
 				beerIndex = i;
 				beerArray.push(i);
 			} 
@@ -82,7 +83,8 @@ function openMoviePoster(title) {
 		// second comparison
 		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
 			for (var i=0; i<beers.length; i++) {
-				if (map-0.5 <= beers[i].abv && map+0.5 >= beers[i].abv) {
+				if ( ( map-0.5 <= beers[i].abv && map+0.5 >= beers[i].abv) 
+				&& ( !beers[i].flavorProfile == "" ) ) {
 					beerIndex = i;
 					beerArray.push(i);
 				} 
@@ -92,7 +94,8 @@ function openMoviePoster(title) {
 		// second comparison
 		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
 			for (var i=0; i<beers.length; i++) {
-				if (map-0.75 <= beers[i].abv && map+0.75 >= beers[i].abv) {
+				if ( ( map-0.75 <= beers[i].abv && map+0.75 >= beers[i].abv) 
+				&& ( !beers[i].flavorProfile == "" ) ) {
 					beerIndex = i;
 					beerArray.push(i);
 				} 
@@ -102,7 +105,8 @@ function openMoviePoster(title) {
 		// second comparison
 		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
 			for (var i=0; i<beers.length; i++) {
-				if (map-10 <= beers[i].abv && map+10 >= beers[i].abv) {
+				if ( ( map-10 <= beers[i].abv && map+10 >= beers[i].abv) 
+				&& ( !beers[i].flavorProfile == "" ) ) {
 					beerIndex = i;
 					beerArray.push(i);
 				} 
