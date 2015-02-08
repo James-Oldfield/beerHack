@@ -57,6 +57,10 @@
                 <h1 id="beerTitle"></h1>
                <img id="beerImage" src="" alt=""></img>
               </div>
+              <div class="food">
+                <h1 id="recipe"></h1>
+                <a id="recipeLink" href=""></a>
+              </div>
             </div>
         </div>
 

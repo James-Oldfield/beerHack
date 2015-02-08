@@ -31,7 +31,7 @@ var oauth2 = require('simple-oauth2')({
 });
 
 // OAuth Token
-var token, keyword, obj, returnBeerData, returnMovieData;
+var token, keyword, obj, returnBeerData, returnMovieData, flavour, whatFood;
 
 // On initial connection
 io.on('connection', function (socket) {
@@ -40,6 +40,19 @@ io.on('connection', function (socket) {
   // Send hello to client
   socket.on('helloNode', function (data) {
     console.log(data);
+  });
+
+  // ON CLIENT food
+  socket.on('whatFood', function (data) {
+
+    // Get the access token object for the client
+    oauth2.client.getToken({}, saveTokenFood);
+
+    whatFood = data;
+
+    returnFoodData = function (obj) {
+      socket.emit('thisFood', obj);
+    }
   });
 
   // ON CLIENT beer
@@ -68,6 +81,13 @@ function saveToken(error, result) {
   if (error) { console.log('Access Token Error', error.message); }
   token = oauth2.accessToken.create(result);
   hitApi(token.token.access_token);
+};
+
+function saveTokenFood(error, result) {
+  if (error) { console.log('Access Token Error', error.message); }
+  token = oauth2.accessToken.create(result);
+  var flavour = whatFood;
+  hitFoodApi(token.token.access_token, flavour);
 };
 
 // Hit the beer API
@@ -107,6 +127,27 @@ function hitMovieApi(movieQuery) {
 
       returnMovieData(movies);
 
+    });
+  }).on('error', function(e){
+    console.log("Error: " + e.message); 
+    console.log( e.stack );
+  });
+}
+
+// Hit the beer API
+function hitFoodApi(token, flavour) {
+  var options = {
+    host: 'api.foodily.com',
+    path: '/v1/beerPairings?flavorProfile=' + flavour,
+    headers: { 'Authorization' : 'Bearer ' + token }
+  };
+
+  http.get(options, function(resp) {
+    resp.on('data', function(chunk) {
+      obj = JSON.parse(chunk);
+      // console.log(obj);
+      // return the object
+      returnFoodData(obj);
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 

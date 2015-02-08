@@ -1,5 +1,5 @@
 var socket = io('localhost:3000');
-var movies, movieScore, beers, map;
+var movies, movieScore, beers, map, food;
 
 // SOCKET CONNECTION
 socket.on('helloClient', function (data) {
@@ -30,6 +30,13 @@ socket.on('helloClient', function (data) {
 
 	});
 
+	socket.on('thisFood', function (data) {
+
+		food = data;
+		drawFood(food);
+
+	});
+
 	socket.on('thisBeer', function (data) {
 		beers = data.beers;
 		console.log('beers loaded');
@@ -49,6 +56,15 @@ function drawTitles(movies) {
 			currentDiv.appendChild(h3);
 		}
 }
+
+function drawFood (food) {
+	console.log(food);
+	document.getElementById('recipe').innerHTML = food.recipePairings[0].pairings[0].type + " !!";
+	document.getElementById('recipeLink').src = food.recipePairings[0].recipe.href;
+	document.getElementById('recipeLink').innerHTML = "Get recipe!!;"
+
+}
+
 
 function openMoviePoster(title) {
 	var imageDiv = document.getElementById('moviePoster');
@@ -103,7 +119,7 @@ function openMoviePoster(title) {
 		}
 
 		// second comparison
-		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
+		if (beerIndex == undefined || beerArray.length < 3) {
 			for (var i=0; i<beers.length; i++) {
 				if ( ( map-10 <= beers[i].abv && map+10 >= beers[i].abv) 
 				&& ( !beers[i].flavorProfile == "" ) ) {
@@ -113,12 +129,12 @@ function openMoviePoster(title) {
 			}
 		}
 
-	console.log(beerArray);
-
 	var beerTitle = beers[beerArray[0]].name;
 	var beerImage = beers[beerArray[0]].imageUrl;
 
 	document.getElementById('beerTitle').innerHTML = beerTitle;
 	document.getElementById('beerImage').src = beerImage;
+
+	socket.emit('whatFood', beers[beerArray[0]].flavorProfile);
 
 }
