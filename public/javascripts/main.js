@@ -44,10 +44,15 @@ socket.on('helloClient', function (data) {
 
 function drawTitles(movies) {
 		for (var i=0; i<movies.length; i++) {
-			var element = document.createElement('div');
-			element.innerHTML = movies[i].title;
+			var h1 = document.createElement('h1');
+			var h3 = document.createElement('h3');
+
+			h1.innerHTML = movies[i].title;
+			h3.innerHTML = movies[i].release_date.slice(0, -6);
 			var currentDiv = document.getElementById('movieTitles');
-			currentDiv.appendChild(element);
+
+			currentDiv.appendChild(h1);
+			currentDiv.appendChild(h3);
 		}
 }
 
