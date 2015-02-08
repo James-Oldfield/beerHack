@@ -44,10 +44,6 @@ io.on('connection', function (socket) {
 
   // ON CLIENT beer
   socket.on('whatBeer', function (data) {
-    console.log(data);
-
-    // store the entered value in keyword var
-    keyword = data;
 
     // Get the access token object for the client
     oauth2.client.getToken({}, saveToken);
@@ -63,7 +59,6 @@ io.on('connection', function (socket) {
 
     returnMovieData = function (obj) {
       socket.emit('thisMovie', obj);
-      console.log('returned');
     }
   });
 });
@@ -72,21 +67,21 @@ io.on('connection', function (socket) {
 function saveToken(error, result) {
   if (error) { console.log('Access Token Error', error.message); }
   token = oauth2.accessToken.create(result);
-  hitApi(token.token.access_token, keyword);
+  hitApi(token.token.access_token);
 };
 
 // Hit the beer API
-function hitApi(token, keyword) {
+function hitApi(token) {
   var options = {
     host: 'api.foodily.com',
-    path: '/v1/beerLookup?name=' + keyword + '&zone=EUR',
+    path: '/v1/beerLookup?zone=EUR',
     headers: { 'Authorization' : 'Bearer ' + token }
   };
 
   http.get(options, function(resp) {
     resp.on('data', function(chunk) {
       obj = JSON.parse(chunk);
-      console.log(obj);
+      // console.log(obj);
       // return the object
       returnBeerData(obj);
     });
@@ -111,6 +106,7 @@ function hitMovieApi(movieQuery) {
       var movies = obj.results;
 
       returnMovieData(movies);
+
     });
   }).on('error', function(e){
     console.log("Error: " + e.message); 

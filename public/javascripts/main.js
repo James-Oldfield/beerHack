@@ -1,8 +1,10 @@
 var socket = io('localhost:3000');
-var movies;
+var movies, movieScore, beers, map;
 
 // SOCKET CONNECTION
 socket.on('helloClient', function (data) {
+
+	socket.emit('whatBeer', 'what Beer?');
 
 	// Send hello to Node
 	socket.emit('helloNode', 'Hello Node!');
@@ -29,16 +31,8 @@ socket.on('helloClient', function (data) {
 	});
 
 	socket.on('thisBeer', function (data) {
-		for (var i=0; i < data.beers.length; i++) {
-			var element = document.createElement('div');
-			var content = document.createTextNode(data.beers[i].name);
-			element.appendChild(content);
-
-			var currentDiv = document.getElementById('test');
-			document.body.insertBefore(element, currentDiv);
-			// document.getElementById('test').innerHTML = data.beers[i].name;
-			console.log(data.beers[i].name);
-		}
+		beers = data.beers;
+		console.log('beers loaded');
 	});
 });
 
@@ -61,9 +55,58 @@ function openMoviePoster(title) {
 	for (var i=0; i<movies.length; i++) {
 		if (movies[i].title == title) {
 			var h1 = movies[i].title;
+			movieScore = movies[i].vote_average;
+			console.log('original number ' + movieScore);
+			map = 
+			(movieScore - 3) * 10 / 6;
+			if (map < 0) {
+				map = 0;
+			}
+			console.log('mapped number ' + map);
 			document.getElementById('moviePosterTitle').innerHTML = h1;
 			imageDiv.src = 'http://image.tmdb.org/t/p/w500' + movies[i].poster_path;
 		}
 	}
 	$('#movieTitles').css('display', 'none');
+
+		var beerIndex;
+
+		// Initial comparison
+		for (var i=0; i<beers.length; i++) {
+			if (map-0.2 <= beers[i].abv && map+0.2 >= beers[i].abv) {
+				beerIndex = i;
+				console.log('first loop '+ beerIndex);
+			} 
+		}
+
+		// second comparison
+		if (beerIndex == undefined) {
+			for (var i=0; i<beers.length; i++) {
+				if (map-0.5 <= beers[i].abv && map+0.5 >= beers[i].abv) {
+					beerIndex = i;
+					console.log('second loop '+ beerIndex);
+				} 
+			}
+		}
+
+		// second comparison
+		if (beerIndex == undefined) {
+			for (var i=0; i<beers.length; i++) {
+				if (map-0.75 <= beers[i].abv && map+0.75 >= beers[i].abv) {
+					beerIndex = i;
+					console.log('third loop '+ beerIndex);
+				} 
+			}
+		}
+
+		// second comparison
+		if (beerIndex == undefined) {
+			for (var i=0; i<beers.length; i++) {
+				if (map-10 <= beers[i].abv && map+10 >= beers[i].abv) {
+					beerIndex = i;
+					console.log('last loop, unmatched '+ beerIndex);
+				} 
+			}
+		}
+
 }
