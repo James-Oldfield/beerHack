@@ -50,8 +50,12 @@
               <div id="movieTitles">
               </div>
               <div id="moviePosters">
-                <h1 id="moviePosterTitle" style="margin-top:0px"></h1>
+                <h1 class="movieh1" id="moviePosterTitle" style="margin-top:0px"></h1>
                 <img id="moviePoster" src="" alt=""></img>
+              </div>
+              <div id="beer">
+                <h1 id="beerTitle"></h1>
+               <img id="beerImage" src="" alt=""></img>
               </div>
             </div>
         </div>

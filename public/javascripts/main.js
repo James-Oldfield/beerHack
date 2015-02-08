@@ -56,13 +56,11 @@ function openMoviePoster(title) {
 		if (movies[i].title == title) {
 			var h1 = movies[i].title;
 			movieScore = movies[i].vote_average;
-			console.log('original number ' + movieScore);
 			map = 
 			(movieScore - 3) * 10 / 6;
 			if (map < 0) {
 				map = 0;
 			}
-			console.log('mapped number ' + map);
 			document.getElementById('moviePosterTitle').innerHTML = h1;
 			imageDiv.src = 'http://image.tmdb.org/t/p/w500' + movies[i].poster_path;
 		}
@@ -70,43 +68,53 @@ function openMoviePoster(title) {
 	$('#movieTitles').css('display', 'none');
 
 		var beerIndex;
+		var beerArray = [];
 
 		// Initial comparison
 		for (var i=0; i<beers.length; i++) {
 			if (map-0.2 <= beers[i].abv && map+0.2 >= beers[i].abv) {
 				beerIndex = i;
-				console.log('first loop '+ beerIndex);
+				beerArray.push(i);
 			} 
 		}
 
+		// NEED TO REMOVE DUPLICATES
 		// second comparison
-		if (beerIndex == undefined) {
+		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
 			for (var i=0; i<beers.length; i++) {
 				if (map-0.5 <= beers[i].abv && map+0.5 >= beers[i].abv) {
 					beerIndex = i;
-					console.log('second loop '+ beerIndex);
+					beerArray.push(i);
 				} 
 			}
 		}
 
 		// second comparison
-		if (beerIndex == undefined) {
+		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
 			for (var i=0; i<beers.length; i++) {
 				if (map-0.75 <= beers[i].abv && map+0.75 >= beers[i].abv) {
 					beerIndex = i;
-					console.log('third loop '+ beerIndex);
+					beerArray.push(i);
 				} 
 			}
 		}
 
 		// second comparison
-		if (beerIndex == undefined) {
+		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
 			for (var i=0; i<beers.length; i++) {
 				if (map-10 <= beers[i].abv && map+10 >= beers[i].abv) {
 					beerIndex = i;
-					console.log('last loop, unmatched '+ beerIndex);
+					beerArray.push(i);
 				} 
 			}
 		}
+
+	console.log(beerArray);
+
+	var beerTitle = beers[beerArray[0]].name;
+	var beerImage = beers[beerArray[0]].imageUrl;
+
+	document.getElementById('beerTitle').innerHTML = beerTitle;
+	document.getElementById('beerImage').src = beerImage;
 
 }
