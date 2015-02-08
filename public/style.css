@@ -116,6 +116,7 @@ html, body {
     font-size: 24px;
     background: #a7362b;
     width: 100%;
+    padding-top: 30px;
 }
 #movieTitles h3 {
     padding: 6px;
@@ -123,6 +124,7 @@ html, body {
     top: -20px;
     position: relative;
     background: #a7362b;
+    padding-bottom: 30px;
 }
 #movieTitles h1:active {
     background: #ce3f31;
@@ -151,8 +153,12 @@ html, body {
     border-left: solid 50px transparent;
     border-right: solid 50px transparent;
 }
+#need{
+    padding-top: 50px!important;
+}
 #beer{
     text-align: center;
+    background: #1a1a1a;
 }
 #beerTitle, #beerRating, #beerDesc{
     padding: 0 10%;
@@ -160,5 +166,25 @@ html, body {
 }
 #beerDesc{
     font-size: 18px;
-    padding-bottom: 45px;
+    padding-bottom: 50px!important;
+}
+.txt{
+    font-size: 100px;
+}
+.subTitle{
+    text-align: center;
+    margin-top: 150px;
+    color: white;
+}
+input{
+    text-align: center!important;
+    font-size: 25px!important;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+.txt{
+    font-size: 25px;
+}
+/* Styles */
 }

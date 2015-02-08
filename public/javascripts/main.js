@@ -12,6 +12,7 @@ socket.on('helloClient', function (data) {
 
 	// On submit emit to server
 	$("#movieInput").change(function () {
+		$('.subTitle').css('display', 'none');
 		var enteredMovie = escape(document.getElementById('movieInput').value);
 		socket.emit('whatMovie', enteredMovie);
 	});
@@ -107,7 +108,7 @@ var obj = beers[beerArray[0]],
 	document.getElementById('beerTitle').innerHTML = beerTitle;
 	document.getElementById('beerRating').innerHTML = beerRating + '% ABV';
 	document.getElementById('beerDesc').innerHTML = beerDesc;
-	document.getElementById('need').innerHTML = "YOU'LL BE NEEDING:";
+	document.getElementById('need').innerHTML = "FOR THE ULTIMATE CINEMATIC EXPERIENCE YOU'LL NEED:";
 
 	for ( var i=0; i<map.toFixed(0)-1; i++ ) {
 		var img = document.createElement('img');

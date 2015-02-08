@@ -28,7 +28,11 @@
             <div class="food" id="showdiv1"><span class="txt"><i class="fa fa-birthday-cake"></i></span></div>
             <div class="beer" id="showdiv2"><span class="txt"><i class="fa fa-beer"></i></span></div>
             <div class="film" id="showdiv3"><span class="txt"><i class="fa fa-film"></i></span></div>
-        
+
+        <div class="subTitle">
+          <h1>CHOOSE A CATEGORY </h1>
+        </div>
+
         </div>
         
         <div class="bot">
@@ -54,9 +58,9 @@
                 <img id="moviePoster" src="" alt=""></img>
               </div>
               <div id="beer">
+                <h2 id="need" style="color: white!important"></h2>
                 <h1 id="beerTitle"></h1>
                 <h3 id="beerRating"></h3>
-                <h2 id="need" style="color: white!important"></h2>
                <img id="beerImage" src="" alt=""></img>
                <div id="beerImages"></div>
                <div id="beerDesc"></div>
