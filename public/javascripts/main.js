@@ -1,4 +1,4 @@
-var socket = io(window.location.hostname);
+var socket = io('localhost:3000');
 var movies, movieScore, beers, map, food;
 
 // SOCKET CONNECTION
@@ -32,8 +32,8 @@ socket.on('helloClient', function (data) {
 
 	socket.on('thisFood', function (data) {
 
-		food = data;
-		drawFood(food);
+		// food = data;
+		// drawFood(food);
 
 	});
 
@@ -58,7 +58,7 @@ function drawTitles(movies) {
 }
 
 function drawFood (food) {
-	console.log(food);
+	// console.log(food);
 	document.getElementById('recipe').innerHTML = food.recipePairings[0].pairings[0].type + " !!";
 	document.getElementById('recipeLink').src = food.recipePairings[0].recipe.href;
 	document.getElementById('recipeLink').innerHTML = "Get recipe!!;"
@@ -74,9 +74,11 @@ function openMoviePoster(title) {
 			movieScore = movies[i].vote_average;
 			map = 
 			(movieScore - 3) * 10 / 6;
-			if (map < 0) {
-				map = map - 10;
+			map = 10 - map;
+			if (map <= 0 || map >= 11) {
+				map = 10;
 			}
+			console.log('map is ' + map);
 			document.getElementById('moviePosterTitle').innerHTML = h1;
 			imageDiv.src = 'http://image.tmdb.org/t/p/w500' + movies[i].poster_path;
 		}
@@ -86,54 +88,36 @@ function openMoviePoster(title) {
 		var beerIndex;
 		var beerArray = [];
 
-		// Initial comparison
-		for (var i=0; i<beers.length; i++) {
-			if ((map-0.2 <= beers[i].abv && map+0.2 >= beers[i].abv)
-				&& (!beers[i].flavorProfile == "")) {
-				beerIndex = i;
-				beerArray.push(i);
-			} 
+	for (var i=0; i<beers.length; i++) {
+		if (map-1 <= beers[i].abv && map+1 >= beers[i].abv) {
+			console.log(i +' index');
+			console.log(beers[i].abv + ' strenth');
+			beerArray.push(i);
 		}
+	}
 
-		// NEED TO REMOVE DUPLICATES
-		// second comparison
-		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
-			for (var i=0; i<beers.length; i++) {
-				if ( ( map-0.5 <= beers[i].abv && map+0.5 >= beers[i].abv) 
-				&& ( !beers[i].flavorProfile == "" ) ) {
-					beerIndex = i;
-					beerArray.push(i);
-				} 
-			}
-		}
+var obj = beers[beerArray[0]],
+		beerTitle  = obj.name,
+		beerRating = obj.abv,
+		beerDesc   = obj.description,
+		beerImage  = obj.imageUrl;
 
-		// second comparison
-		if (beerIndex == undefined /*|| beerArray.length < 3*/) {
-			for (var i=0; i<beers.length; i++) {
-				if ( ( map-0.75 <= beers[i].abv && map+0.75 >= beers[i].abv) 
-				&& ( !beers[i].flavorProfile == "" ) ) {
-					beerIndex = i;
-					beerArray.push(i);
-				} 
-			}
-		}
-
-		// second comparison
-		if (beerIndex == undefined || beerArray.length < 3) {
-			for (var i=0; i<beers.length; i++) {
-				if ( ( map-10 <= beers[i].abv && map+10 >= beers[i].abv) 
-				&& ( !beers[i].flavorProfile == "" ) ) {
-					beerIndex = i;
-					beerArray.push(i);
-				} 
-			}
-		}
-
-	var beerTitle = beers[beerArray[0]].name;
-	var beerImage = beers[beerArray[0]].imageUrl;
+	beerRating = beerRating.toFixed(2);
 
 	document.getElementById('beerTitle').innerHTML = beerTitle;
-	document.getElementById('beerImage').src = beerImage;
+	document.getElementById('beerRating').innerHTML = beerRating + '% ABV';
+	document.getElementById('beerDesc').innerHTML = beerDesc;
+	document.getElementById('need').innerHTML = "YOU'LL BE NEEDING:";
+
+	for ( var i=0; i<map.toFixed(0)-1; i++ ) {
+		var img = document.createElement('img');
+		var loc = document.getElementById('beerImages');
+		loc.appendChild(img);
+
+		img.src = beerImage;
+	}
+
+			var currentDiv = document.getElementById('movieTitles');
 
 	socket.emit('whatFood', beers[beerArray[0]].flavorProfile);
 
