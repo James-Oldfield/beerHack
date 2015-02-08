@@ -1,5 +1,5 @@
 var socket = io('localhost:3000');
-var titles;
+var movies;
 
 // SOCKET CONNECTION
 socket.on('helloClient', function (data) {
@@ -20,17 +20,17 @@ socket.on('helloClient', function (data) {
 		socket.emit('whatMovie', enteredMovie);
 	});
 
+	// if movie titled has been clicked
+	$('#movieTitles').on('click', function(data) {
+		// Open the movie poster
+		openMoviePoster(data.toElement.innerHTML);
+	});
+
+	// on movie enter
 	socket.on('thisMovie', function (data) {
 
-		titles = data;
-		drawTitles(titles);
-
-		console.log(titles);
-
-		// var element = document.createElement('img');
-		// element.src = 'http://image.tmdb.org/t/p/w500' + data;
-		// var currentDiv = document.getElementById('moviePosters');
-		// currentDiv.appendChild(element);
+		movies = data;
+		drawTitles(movies);
 
 	});
 
@@ -48,11 +48,20 @@ socket.on('helloClient', function (data) {
 	});
 });
 
-function drawTitles(titles) {
-		for (var i=0; i<titles.length; i++) {
+function drawTitles(movies) {
+		for (var i=0; i<movies.length; i++) {
 			var element = document.createElement('div');
-			element.innerHTML = titles[i].title;
+			element.innerHTML = movies[i].title;
 			var currentDiv = document.getElementById('movieTitles');
 			currentDiv.appendChild(element);
 		}
+}
+
+function openMoviePoster(title) {
+	var imageDiv = document.getElementById('moviePoster');
+	for (var i=0; i<movies.length; i++) {
+		if (movies[i].title == title) {
+			imageDiv.src = 'http://image.tmdb.org/t/p/w500' + movies[i].poster_path;
+		}
+	}
 }
