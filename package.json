@@ -2,8 +2,12 @@
   "name": "beerHack",
   "version": "0.0.0",
   "private": true,
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "0.10.32"
   },
   "dependencies": {
     "body-parser": "~1.10.1",
