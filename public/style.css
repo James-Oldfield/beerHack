@@ -101,4 +101,20 @@ html, body {
     height: auto;
     margin: auto;
 }
+#movieTitles {
+    text-align: center;
+    color: #fff;
+    letter-spacing: 2px;
+    font-size: 18px;
+    padding: 10px;
+    
+}
+#movieTitles div {
+    margin-bottom: 10px;
+    padding: 6px;
+    background: #a7362b;
+}
+#movieTitles div:active {
+    background: #ce3f31;
+}
 
